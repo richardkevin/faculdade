@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import csv
 import json
 
@@ -38,7 +39,7 @@ def checkIfUserRatedItem(user, item):
     return False
 
 
-def getItemRated(user, item):
+def get_user_rate_item(user, item):
     return users[user][item]
 
 
@@ -78,19 +79,75 @@ def checkEqualUserRates(user):
     return count
 
 
-def predBasedUsers(user, item):
-    users_rated = howManyUsersRatedItem(item)
+def users_rates(users_rated_item):
     rates = {}
-    diff_user = {}
-    for user_r in users_rated[1]:
+    for user_r in users_rated_item[1]:
         rates[user_r] = users[user_r]
-    for r in rates:
-        diff_rates = {}
-        for item_r in rates[r]:
-            diff_rates[item_r] = (users[user][item_r], rates[r][item_r])
-        diff_user[r] = diff_rates
-    # comparar e ver similaridades
+    return rates
 
+
+def get_medias(rates):
+    medias = {}
+    for user in rates:
+        soma = 0
+        count = 0
+        for item in rates[user]:
+            aux = rates[user][item]
+            if aux != "?":
+                count += 1
+                soma += float(aux)
+        medias[user] = soma / count
+    return medias
+
+
+def get_rab(principal):
+    sum_rab = {}
+    for item in users[principal]:
+        if users[principal][item] != "?":
+            sum_rab[item] = round(
+                (float(users[principal][item]) - medias[principal]), 2
+            )
+    return sum_rab
+
+
+def get_rbb(list_users):
+    sum_rbb = {}
+    for user in list_users:
+        aux = {}
+        for item in list_users[user]:
+            rbb = list_users[user][item]
+            if rbb != "?":
+                aux[item] = round((float(rbb) - medias[user]), 2)
+        sum_rbb[user] = aux
+    return sum_rbb
+
+
+def get_similarity(rab, rbb):
+    similaritys = {}
+    for user in rbb:
+        numerador = []
+        denominador = []
+        rab_denominador = []
+        rbb_denominador = []
+        for item in rbb[user]:
+            if item in rab and item in rbb[user]:
+                prod_rab = rab[item]
+                prod_rbb = rbb[user][item]
+                numerador.append(prod_rab * prod_rbb)
+                rab_denominador.append(prod_rab**2)
+                rbb_denominador.append(prod_rbb**2)
+                denominador.append(
+                    sum(rab_denominador)**(1/2.0) * sum(rbb_denominador)**(1/2.0)
+                )
+        sim = round((sum(numerador) / sum(denominador)), 2)
+        similaritys[user] = sim
+    return similaritys
+
+
+def descending_similarity(sim):
+    for key, value in sorted(sim.iteritems(), key=lambda (k,v): (v,k), reverse=True):
+        print "{}: {}".format(key, value)
+# while True: quit()
 
 
 def predBasedItems():
@@ -98,16 +155,17 @@ def predBasedItems():
 
 
 user, item = "User 9", "Item 10"
-# predBasedUsers(user, item)
+
 # print "Qual usuario deseja selecionar?"
 # user = "User " + str(userInput())
 # print "Qual item deseja visualizar?"
 # item = "Item " + str(userInput())
+
 if checkIfUserRatedItem(user, item):
     print "O '{}' avaliou o '{}' com: {}".format(
         user,
         item,
-        getItemRated(user, item)
+        get_user_rate_item(user, item)
     )
 else:
     print "Quantas pessoas avaliaram o {}?".format(item)
@@ -119,4 +177,10 @@ else:
     print "Quantos usuarios avaliaram o {}?".format(item)
     print "{} usuarios\n".format(usersThatRatedItemY(item))
     print "pred(rx,y) baseado em usuarios"
-    print predBasedUsers(user, item)
+    medias = get_medias(users)
+    list_users = users.copy()
+    list_users.pop(user)
+    rab = get_rab(user)
+    rbb = get_rbb(list_users)
+    sim = get_similarity(rab, rbb)
+    descending_similarity(sim)
