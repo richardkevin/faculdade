@@ -1,30 +1,24 @@
-from collections import OrderedDict
 import csv
-import json
 
-jsonfile = open('ratings.json', 'w')
 
-users = {}
-ratings = []
+def read_csv_dataset(dataset):
+    dataset_name = "{}.csv".format(dataset)
+    users = {}
+    ratings = []
+    with open(dataset_name, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            ratings.append(row)
 
-with open('ratings.csv', 'r') as csvfile:
-    reader = csv.reader(csvfile)
-    for row in reader:
-        ratings.append(row)
+    ratings.pop(0)
+    for user in ratings:
+        aux = {}
+        for rate in enumerate(user[1:]):
+            itemN = "Item{}".format(rate[0]+1)
+            aux[itemN] = rate[1]
+        users[user[0]] = aux
 
-header = ratings[0]
-header.pop()
-ratings.pop(0)
-
-for rate in ratings:
-    aux = {}
-    for i in enumerate(rate[1:]):
-        aux[header[i[0]]] = i[1]
-    users[rate[0]] = aux
-
-json.dump(users, jsonfile, indent=4)
-jsonfile.write('\n')
-jsonfile.close()
+    return users
 
 
 def userInput():
@@ -33,29 +27,19 @@ def userInput():
     return num if num in range(1, 11) else userInput()
 
 
-def checkIfUserRatedItem(user, item):
-    if users[user][item] != "?":
-        return True
-    return False
+def checkIfUserRatedItemY(user, item):
+    return users_ratings[user][item] != '?'
 
 
 def get_user_rate_item(user, item):
-    return users[user][item]
-
-
-def usersThatRatedItemY(item):
-    count = 0
-    for user in users:
-        if checkIfUserRatedItem(user, item):
-            count += 1
-            return count
+    return users_ratings[user][item]
 
 
 def countUserRates(user):
-    for user in users:
+    for user in users_ratings:
         count = 0
-        for i in users[user]:
-            if users[user][i] == "?":
+        for i in users_ratings[user]:
+            if users_ratings[user][i] == "?":
                 count += 1
         return 10-count
 
@@ -63,26 +47,33 @@ def countUserRates(user):
 def howManyUsersRatedItem(item):
     count = 0
     user_with_same_rates = []
-    for user in users:
-        if users[user][item] != "?":
+    for user in users_ratings:
+        if users_ratings[user][item] != "?":
             count += 1
             user_with_same_rates.append(user)
     return (count, user_with_same_rates)
 
 
-def checkEqualUserRates(user):
+def usersRatedSameItems(user_principal):
     count = 0
-    for u in users:
-        if user != u:
-            if users[u] == users[user]:
-                count += 1
+    for user in users_ratings:
+        same = True
+        i = 1
+        tam = len(users_ratings[user])
+        while same and i < tam:
+            itemN = "Item{}".format(i)
+            if checkIfUserRatedItemY(user, itemN) != checkIfUserRatedItemY(user_principal, itemN):
+                same = False
+            i += 1
+        if same and i == tam:
+            count += 1
     return count
 
 
 def users_rates(users_rated_item):
     rates = {}
     for user_r in users_rated_item[1]:
-        rates[user_r] = users[user_r]
+        rates[user_r] = users_ratings[user_r]
     return rates
 
 
@@ -96,16 +87,16 @@ def get_medias(rates):
             if aux != "?":
                 count += 1
                 soma += float(aux)
-        medias[user] = soma / count
+        medias[user] = round((soma / count), 2)
     return medias
 
 
 def get_rab(principal):
     sum_rab = {}
-    for item in users[principal]:
-        if users[principal][item] != "?":
+    for item in users_ratings[principal]:
+        if users_ratings[principal][item] != "?":
             sum_rab[item] = round(
-                (float(users[principal][item]) - medias[principal]), 2
+                (float(users_ratings[principal][item]) - medias[principal]), 2
             )
     return sum_rab
 
@@ -145,42 +136,77 @@ def get_similarity(rab, rbb):
 
 
 def descending_similarity(sim):
-    for key, value in sorted(sim.iteritems(), key=lambda (k,v): (v,k), reverse=True):
-        print "{}: {}".format(key, value)
-# while True: quit()
+    lista = []
+    for key, value in sorted(sim.iteritems(), key=lambda (k, v): (v, k), reverse=True):
+        descending = {}
+        descending[key] = value
+        lista.append(descending)
+    return lista
 
 
-def predBasedItems():
-    pass
+def higher_similarity(sim):
+    key, value = max(sim.iteritems(), key=lambda x: x[1])
+    return (key, value)
 
 
-user, item = "User 9", "Item 10"
+def user_prediction(higher_sim):
+    numerador = []
+    denominador = round(sum(sim.values()), 2)
+    user = higher_sim[0]
+    for item in rbb[user]:
+        numerador.append(higher_sim[1] * rbb[user][item])
+    return medias[user] + (sum(numerador) / denominador)
 
-# print "Qual usuario deseja selecionar?"
-# user = "User " + str(userInput())
-# print "Qual item deseja visualizar?"
-# item = "Item " + str(userInput())
 
-if checkIfUserRatedItem(user, item):
+def item_prediction(similaritys, item_a, item_b, size):
+    numerador = []
+    sum_rua = []
+    sum_rub = []
+    sim_slice = similaritys[:size]
+    for sim in sim_slice:
+        for user in sim:
+            if users_ratings[user][item_a] != "?" and users_ratings[user][item_b] != "?":
+                numerador.append(float(users_ratings[user][item_a]) * float(users_ratings[user][item_b]))
+                sum_rua.append(float(users_ratings[user][item_a])**2)
+                sum_rub.append(float(users_ratings[user][item_b])**2)
+    final = sum(numerador) / (sum(sum_rua)**(1/2.0) + sum(sum_rub)**(1/2.0))
+    return round(final, 2)
+
+
+# user, item = "User18", "Item5"
+users_ratings = read_csv_dataset("dataset_Izabella_Barboza")
+print "Qual usuario deseja selecionar?"
+user = "User" + str(userInput())
+print "Qual item deseja visualizar?"
+item = "Item" + str(userInput())
+
+if checkIfUserRatedItemY(user, item):
     print "O '{}' avaliou o '{}' com: {}".format(
         user,
         item,
         get_user_rate_item(user, item)
     )
 else:
-    print "Quantas pessoas avaliaram o {}?".format(item)
+    print "Numero de usuarios que avaliaram o {}?".format(item)
     print "{} usuarios\n".format(howManyUsersRatedItem(item)[0])
-    print "Quantos itens o {} avaliou?".format(user)
+    print "Numero de itens avaliados pelo {}?".format(user)
     print "{} itens\n".format(countUserRates(user))
-    print "Quantos usuarios avaliaram os mesmos itens que o {}?".format(user)
-    print "{} usuarios \n".format(checkEqualUserRates(user))
-    print "Quantos usuarios avaliaram o {}?".format(item)
-    print "{} usuarios\n".format(usersThatRatedItemY(item))
+    print "Numero de usuarios que avaliaram os mesmos itens que o {}?".format(user)
+    print "{} usuarios \n".format(usersRatedSameItems(user))
     print "pred(rx,y) baseado em usuarios"
-    medias = get_medias(users)
-    list_users = users.copy()
+    medias = get_medias(users_ratings)
+    list_users = users_ratings.copy()
     list_users.pop(user)
     rab = get_rab(user)
     rbb = get_rbb(list_users)
     sim = get_similarity(rab, rbb)
-    descending_similarity(sim)
+    descending_sim = descending_similarity(sim)
+    higher_sim = higher_similarity(sim)
+    print user_prediction(higher_sim)
+    print "\npred(rx,y) baseado em itens"
+    print "Qual item deseja comparar?"
+    item_secundario = "Item" + str(userInput())
+    # item_secundario = "Item1"
+    print "pred(rx,y) = {}".format(
+        item_prediction(descending_sim, item, item_secundario, 5)
+    )
