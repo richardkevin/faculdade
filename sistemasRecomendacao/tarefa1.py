@@ -2,10 +2,10 @@ import csv
 
 
 def read_csv_dataset(dataset):
-    dataset_name = "{}.csv".format(dataset)
+    # dataset_name = "{}.csv".format(dataset)
     users = {}
     ratings = []
-    with open(dataset_name, 'r') as csvfile:
+    with open(dataset, 'r') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             ratings.append(row)
@@ -19,6 +19,10 @@ def read_csv_dataset(dataset):
         users[user[0]] = aux
 
     return users
+
+
+def output_json():
+    pass
 
 
 def userInput():
@@ -56,10 +60,12 @@ def howManyUsersRatedItem(item):
 
 def usersRatedSameItems(user_principal):
     count = 0
-    for user in users_ratings:
+    copy_rates = users_ratings.copy()
+    del copy_rates[user_principal]
+    for user in copy_rates:
         same = True
         i = 1
-        tam = len(users_ratings[user])
+        tam = len(copy_rates[user])
         while same and i < tam:
             itemN = "Item{}".format(i)
             if checkIfUserRatedItemY(user, itemN) != checkIfUserRatedItemY(user_principal, itemN):
@@ -155,7 +161,8 @@ def user_prediction(higher_sim):
     user = higher_sim[0]
     for item in rbb[user]:
         numerador.append(higher_sim[1] * rbb[user][item])
-    return medias[user] + (sum(numerador) / denominador)
+    resp = medias[user] + (sum(numerador) / denominador)
+    return round(resp, 2)
 
 
 def item_prediction(similaritys, item_a, item_b, size):
@@ -173,40 +180,110 @@ def item_prediction(similaritys, item_a, item_b, size):
     return round(final, 2)
 
 
-# user, item = "User18", "Item5"
-users_ratings = read_csv_dataset("dataset_Izabella_Barboza")
-print "Qual usuario deseja selecionar?"
-user = "User" + str(userInput())
-print "Qual item deseja visualizar?"
-item = "Item" + str(userInput())
+datasets = {
+    "dataset_adriel_maria.csv": [
+        ("User3", "Item10"), ("User26", "Item8"), ("User30", "Item9")
+    ],
+    "dataset_Fabricio_Filipe.csv": [
+        ("User3", "Item4"), ("User7", "Item7"), ("User15", "Item1")
+    ],
+    "dataset_higor.csv": [
+        ("User5", "Item10"), ("User7", "Item7"), ("User10", "Item4")
+    ],
+    "dataset_Javier_Isela.csv": [
+        ("User12", "Item6"), ("User25", "Item3"), ("User20", "Item7")
+    ],
+    "dataset_Izabella_Barboza.csv": [
+        ("User8", "Item2"), ("User29", "Item5"), ("User30", "Item4")
+    ],
+    "dataset_joao_pedro_portela.csv": [
+        ("User7", "Item2"), ("User30", "Item9"), ("User16", "Item7")
+    ],
+    "dataset_Juan_Reis.csv": [
+        ("User10", "Item6"), ("User18", "Item4"), ("User28", "Item10")
+    ],
+    "dataset_Leandro.csv": [
+        ("User4", "Item8"), ("User14", "Item9"), ("User29", "Item10")
+    ],
+    "dataset_leonardo_ramos.csv": [
+        ("User1", "Item10"), ("User6", "Item1"), ("User30", "Item2")
+    ],
+    "dataset_Rodrigo_Campos.csv": [
+        ("User8", "Item9"), ("User14", "Item2"), ("User22", "Item10")
+    ],
+    "dataset_Wemerson.csv": [
+        ("User7", "Item5"), ("User19", "Item6"), ("User23", "Item7")
+    ],
+}
 
-if checkIfUserRatedItemY(user, item):
-    print "O '{}' avaliou o '{}' com: {}".format(
-        user,
-        item,
-        get_user_rate_item(user, item)
-    )
-else:
-    print "Numero de usuarios que avaliaram o {}?".format(item)
-    print "{} usuarios\n".format(howManyUsersRatedItem(item)[0])
-    print "Numero de itens avaliados pelo {}?".format(user)
-    print "{} itens\n".format(countUserRates(user))
-    print "Numero de usuarios que avaliaram os mesmos itens que o {}?".format(user)
-    print "{} usuarios \n".format(usersRatedSameItems(user))
-    print "pred(rx,y) baseado em usuarios"
-    medias = get_medias(users_ratings)
-    list_users = users_ratings.copy()
-    list_users.pop(user)
-    rab = get_rab(user)
-    rbb = get_rbb(list_users)
-    sim = get_similarity(rab, rbb)
-    descending_sim = descending_similarity(sim)
-    higher_sim = higher_similarity(sim)
-    print user_prediction(higher_sim)
-    print "\npred(rx,y) baseado em itens"
-    print "Qual item deseja comparar?"
-    item_secundario = "Item" + str(userInput())
-    # item_secundario = "Item1"
-    print "pred(rx,y) = {}".format(
-        item_prediction(descending_sim, item, item_secundario, 5)
-    )
+
+def questionario():
+    for data in datasets:
+        users_ratings = read_csv_dataset(data)
+        for i in range(3):
+            user = datasets[data][i][0]
+            item = datasets[data][i][1]
+
+            print "{}: {}, {}\n".format(data.split('_')[1:], user, item)
+            if checkIfUserRatedItemY(user, item):
+                print "O '{}' avaliou o '{}' com: {}".format(
+                    user,
+                    item,
+                    get_user_rate_item(user, item)
+                )
+            else:
+                print "Numero de usuarios que avaliaram o {}?".format(item)
+                print "{} usuarios\n".format(howManyUsersRatedItem(item)[0])
+                print "Numero de itens avaliados pelo {}?".format(user)
+                print "{} itens\n".format(countUserRates(user))
+                print "Numero de usuarios que avaliaram os mesmos itens que o {}?".format(user)
+                print "{} usuarios \n".format(usersRatedSameItems(user))
+                print "pred(rx,y) baseado em usuarios"
+                medias = get_medias(users_ratings) # NOQA
+                list_users = users_ratings.copy()
+                list_users.pop(user)
+                rab = get_rab(user)
+                rbb = get_rbb(list_users)
+                sim = get_similarity(rab, rbb)
+                descending_sim = descending_similarity(sim)
+                higher_sim = higher_similarity(sim)
+                print user_prediction(higher_sim)
+                print "\npred(rx,y) baseado em itens"
+                item_secundario = "Item1"
+                "Item2" if item == item_secundario else item_secundario
+                print "Item comparado {}".format(item_secundario)
+                print "pred(rx,y) = {}".format(
+                    item_prediction(descending_sim, item, item_secundario, 5)
+                )
+
+
+respostas = {}
+for data in datasets:
+    users_ratings = read_csv_dataset(data)
+    respostas[data] = {}
+    for i in range(3):
+        aux = []
+        user = datasets[data][i][0]
+        item = datasets[data][i][1]
+
+        aux.append(howManyUsersRatedItem(item)[0])
+        aux.append(countUserRates(user))
+        aux.append(usersRatedSameItems(user))
+
+        medias = get_medias(users_ratings)
+        list_users = users_ratings.copy()
+        list_users.pop(user)
+        rab = get_rab(user)
+        rbb = get_rbb(list_users)
+        sim = get_similarity(rab, rbb)
+        descending_sim = descending_similarity(sim)
+        higher_sim = higher_similarity(sim)
+        aux.append(user_prediction(higher_sim))
+
+        item_secundario = "Item1"
+        "Item2" if item == item_secundario else item_secundario
+        aux.append(
+            item_prediction(descending_sim, item, item_secundario, 5)
+        )
+        user_item = "{}, {}".format(user, item)
+        respostas[data][user_item] = aux
