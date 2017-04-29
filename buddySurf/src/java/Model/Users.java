@@ -1,10 +1,11 @@
-package buddysurf;
+package Model;
+
+
 
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,14 +14,12 @@ import javax.persistence.Table;
  * @author richard
  */
 @Entity
-@Table(name = "users")
-public class User implements Serializable {
+@Table(name = "user")
+public class Users implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", unique=true, nullable = false)
     private Long id;
-    @Column
-    private String name;
     @Column
     private String username;
     @Column
@@ -32,12 +31,11 @@ public class User implements Serializable {
     @Column
     private int max_guests;
 
-    public User() {
+    public Users() {
     }
 
-    public User(Long id, String name, String username, String password, int age, String address, int max_guests){
+    public Users(Long id, String username, String password, int age, String address, int max_guests){
         this.id = id;
-        this.name = name;
         this.username = username;
         this.password = password;
         this.age = age;
@@ -47,10 +45,6 @@ public class User implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setUsername(String username) {
@@ -75,10 +69,6 @@ public class User implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getUsername() {
