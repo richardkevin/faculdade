@@ -1,18 +1,53 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>BuddySurf</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <a href="add">Sign in</a>
-        <a href="rateUser">Avaliações</a>
-        
+        <div class="menuBar">
+            <div class="logo">BuddySurf</div>
+            <div class="actionBar">
+                <!--if user.logged-->
+                Olá <a href="profile">User</a>
+                <!--else-->
+                <a href="add">Cadastre-se</a>
+                <!--endif-->
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="search">
+                <input type="text" placeholder="Procurar...">
+                <span class="fa fa-search"></span>
+            </div>
+
+            <div class="navBar">
+                <div class="navBarItem">Acomodações</div>
+                <div class="navBarItem">Convocações</div>
+                <div class="navBarItem" href="rateUser">Avaliações</div>
+            </div>
+
+            <!-- mock -->
+            <table class="results">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Endereço</th>
+                        <th>Custo Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>03/05/17</td>
+                        <td>Rua sem saida</td>
+                        <td>R$ 2 pilas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
