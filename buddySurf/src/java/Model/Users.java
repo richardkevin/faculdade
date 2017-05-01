@@ -3,12 +3,17 @@ package Model;
 
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,10 +23,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")})
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u where u.name = :name"),
+    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u where u.username = :username")})
 public class Users implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "user_id", unique=true, nullable = false)
     private Long id;
     @Column
@@ -36,8 +43,10 @@ public class Users implements Serializable {
     private String address;
     @Column
     private int max_guests;
-
-    public Users() {
+    @OneToMany(mappedBy = "user", targetEntity = Rating.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rating> rates;
+    
+    public Users(){
     }
 
     public Users(Long id, String username, String password, int age, String address, int max_guests){
