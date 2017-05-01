@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -14,12 +16,16 @@ import javax.persistence.Table;
  * @author richard
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
+@NamedQueries({
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")})
 public class Users implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name = "id", unique=true, nullable = false)
+    @Column(name = "user_id", unique=true, nullable = false)
     private Long id;
+    @Column
+    private String name;
     @Column
     private String username;
     @Column
@@ -36,6 +42,7 @@ public class Users implements Serializable {
 
     public Users(Long id, String username, String password, int age, String address, int max_guests){
         this.id = id;
+        this.name = name;
         this.username = username;
         this.password = password;
         this.age = age;
@@ -45,6 +52,10 @@ public class Users implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setUsername(String username) {
@@ -69,6 +80,10 @@ public class Users implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getUsername() {

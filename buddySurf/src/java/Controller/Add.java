@@ -32,6 +32,7 @@ public class Add extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Cadastrar Usuário</h1>");
             out.println("<form action='add' method='POST'>");
+            out.println("Name: <input type='text' name='name' > <br/>");
             out.println("Username: <input type='text' name='username' > <br/>");
             out.println("Password: <input type='text' name='password' > <br/>");
             out.println("Age: <input type='text' name='age' > <br/>");
@@ -53,6 +54,7 @@ public class Add extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            String name = request.getParameter("name");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             int age = Integer.parseInt(request.getParameter("age"));
@@ -62,6 +64,7 @@ public class Add extends HttpServlet {
             Session session = HibernateSessionFactory.getSession();
 
             Users u = new Users();
+            u.setName(name);
             u.setUsername(username);
             u.setPassword(password);
             u.setAge(age);
@@ -73,7 +76,7 @@ public class Add extends HttpServlet {
             tx.commit();
             session.flush();
             session.close();
-            request.getRequestDispatcher("add_redirect.jsp").forward(request, response);
+            request.getRequestDispatcher("/add_redirect.jsp").forward(request, response);
     }
 
     /**
