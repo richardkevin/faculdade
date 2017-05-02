@@ -43,12 +43,6 @@ public class Rating implements Serializable{
     @JoinColumn(name="user_id")
     private Users user;
 
-    private final int RATED_BY_FRIEND = 0;
-    private final int RATED_BY_GUEST = 1;
-    private final int RATED_BY_HOST = 2;
-    private final int RATED_BY_CALLER = 3;
-    private final int RATED_BY_INVITED = 4;
-
     public Rating() {
     }
 

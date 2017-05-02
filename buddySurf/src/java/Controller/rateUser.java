@@ -5,6 +5,7 @@ import Model.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,14 +31,30 @@ public class rateUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Mostrar Avaliações</title>");
+                out.println("<title>Mostrar Avaliações</title>");
+                out.println("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Avaliar Usuário</h1>");
+            // nome usuario
             out.println("<form action='rateUser' method='POST'>");
-            out.println("Tipo: <input type='text' name='type' > <br/>");
-            out.println("Stars: <input type='text' name='stars' > <br/>");
-            out.println("Descrição: <textarea rows='4' cols='20' name='description'> </textarea><br/>");
+            out.println("Tipo: <select name='type'>");
+                out.println("<option value='0'>Avaliar Amigo</option>");
+                out.println("<option value='1'>Avaliar Hóspede</option>");
+                out.println("<option value='2'>Avaliar Anfitriã(o)</option>");
+                out.println("<option value='3'>Avaliar Convidado</option>");
+                out.println("<option value='4'>Avaliar Organizador</option>");
+            out.println("</select> <br/>");
+            // out.println("<div class='rating'>Stars: <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>");
+
+            out.println("<div class='stars'>Nota: ");
+                out.println("<input type='radio' name='rate' value='1' checked> 1");
+                out.println("<input type='radio' name='rate' value='2'> 2");
+                out.println("<input type='radio' name='rate' value='3'> 3");
+                out.println("<input type='radio' name='rate' value='4'> 4");
+                out.println("<input type='radio' name='rate' value='5'> 5");
+            out.println("</div>");
+            out.println("Descrição: <textarea rows='2' cols='20' name='description'> </textarea><br/>");
             out.println("<input type='submit' value='Enviar'>");
             out.println("</form>");
             out.println("</body>");
@@ -58,7 +75,7 @@ public class rateUser extends HttpServlet {
             throws ServletException, IOException {
             int type = Integer.parseInt(request.getParameter("type"));
             String description = request.getParameter("description");
-            int stars = Integer.parseInt(request.getParameter("stars"));
+            int stars = Integer.parseInt(request.getParameter("rate"));
 
             Session session = HibernateSessionFactory.getSession();
 

@@ -9,3 +9,10 @@ CREATE TABLE users (
   PRIMARY KEY (user_id),
   UNIQUE INDEX (username)
 ) ENGINE=INNODB;
+
+CREATE TABLE `buddy_surf`.`rate` (
+  `rate_id` INT NOT NULL,
+  `type` INT NOT NULL,
+  `description` TEXT NOT NULL,
+  `stars` INT NOT NULL,
+  PRIMARY KEY (`rate_id`));

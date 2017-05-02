@@ -51,6 +51,10 @@ th, td {
     margin: auto;
     text-align: left;
 }
+/*stars rate*/
+.star input{
+    display: flex;
+}
 .search{
     position: relative;
 }
