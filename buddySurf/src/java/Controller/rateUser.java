@@ -31,7 +31,7 @@ public class rateUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-                out.println("<title>Mostrar Avaliações</title>");
+                out.println("<title>BuddySurf</title>");
                 out.println("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>");
             out.println("</head>");
             out.println("<body>");

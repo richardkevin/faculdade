@@ -23,6 +23,13 @@ public class Accommodation implements Serializable {
     private Long id;
     private String country;
     private String city;
+    private int rooms;
+    private int bathrooms;
+    private int type;
+    private List<String> amenities;
+    private int bedsAvailable;
+    private String description;
+    private List<Fotos> pictures;
     private List<Date> availableDates;
     private List<Date> unavailableDates;
 }

@@ -17,19 +17,38 @@ th, td {
     background-color: #555;
     color: #fff;
 }
+.circular {
+    background: white no-repeat;
+    border-radius: 50%;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+}
 .main{
     margin: 0 95px;
 }
 .menuBar{
+    align-items: center;
     background-color: #090808;
-    padding: 10px;
     display: -webkit-flex;
     display: flex;
     justify-content: space-between;
+    padding: 5px;
 }
 .navBar{
     display: flex;
     margin-bottom: 10px;
+}
+.navBar a{
+    text-decoration: none;
+}
+.navBar a:visited {
+    color: inherit;
+}
+.navBar a:nth-child(2) {
+    margin: 0 25px;
 }
 .navBarItem{
     border-bottom: 3px solid transparent;
@@ -39,9 +58,6 @@ th, td {
 }
 .navBarItem:hover{
     border-bottom: 3px solid #555;
-}
-.navBarItem:nth-child(2) {
-    margin: 0 25px;
 }
 .logo{
     color: #fff;
