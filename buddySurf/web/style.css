@@ -2,6 +2,12 @@ body{
     margin: 0;
     color: #555;
 }
+table {
+    border-collapse: collapse;
+}
+tr:hover {
+    background-color: #ededed;
+}
 th, td {
     padding: 5px;
 }
