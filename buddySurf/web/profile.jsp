@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : 09/05/2017, 21:13:20
+    Document   : profile
+    Created on : 20/05/2017, 17:09:48
     Author     : richard
 --%>
 
@@ -15,15 +15,9 @@
     </head>
     <body>
         <%@ include file="header.jsp" %>
-
-        <div class="center">
-            <h1>Entrar</h1>
-
-            <form action="Login" method="POST">
-                Username: <input type='text' name='username'> <br/>
-                Password: <input type='text' name='password'> <br/>
-                <input type='submit' value='Login'>
-            </form>
-        </div>
+        <h1>Olá <%= request.getAttribute("name") %> !</h1>
+        
+        <h2>Veja suas avaliações</h2>
+        
     </body>
 </html>

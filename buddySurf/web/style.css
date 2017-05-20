@@ -23,6 +23,13 @@ th, td {
     background-color: #555;
     color: #fff;
 }
+.container {
+    display: flex;
+    justify-content: center;
+}
+.center {
+    text-align: center;
+}
 .circular {
     background: white no-repeat;
     border-radius: 50%;
