@@ -24,44 +24,7 @@ public class rateUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        Session session = HibernateSessionFactory.getSession();
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-                out.println("<title>BuddySurf</title>");
-                out.println("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Avaliar Usuário</h1>");
-            // nome usuario
-            out.println("<form action='rateUser' method='POST'>");
-            out.println("Tipo: <select name='type'>");
-                out.println("<option value='0'>Avaliar Amigo</option>");
-                out.println("<option value='1'>Avaliar Hóspede</option>");
-                out.println("<option value='2'>Avaliar Anfitriã(o)</option>");
-                out.println("<option value='3'>Avaliar Convidado</option>");
-                out.println("<option value='4'>Avaliar Organizador</option>");
-            out.println("</select> <br/>");
-            // out.println("<div class='rating'>Stars: <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>");
-
-            out.println("<div class='stars'>Nota: ");
-                out.println("<input type='radio' name='rate' value='1' checked> 1");
-                out.println("<input type='radio' name='rate' value='2'> 2");
-                out.println("<input type='radio' name='rate' value='3'> 3");
-                out.println("<input type='radio' name='rate' value='4'> 4");
-                out.println("<input type='radio' name='rate' value='5'> 5");
-            out.println("</div>");
-            out.println("Descrição: <textarea rows='2' cols='20' name='description'> </textarea><br/>");
-            out.println("<input type='submit' value='Enviar'>");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
-
-            session.close();
-        }
+        request.getRequestDispatcher("/rateUser.jsp").forward(request, response);
     }
 
     @Override
