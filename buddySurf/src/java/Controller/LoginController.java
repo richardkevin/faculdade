@@ -42,15 +42,18 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         Session session = HibernateSessionFactory.getSession();
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
-        List result = session.getNamedQuery("Users.findByUsername").setString("username", username).list();
 
+        List result = session.getNamedQuery("Users.findByUsername").setString("username", username).list();
+        request.setAttribute("error", null);
+        
         if (result.isEmpty()){
-            request.setAttribute("data", "Usuário inválido");
+            request.setAttribute("error", "Usuário inválido");
+            request.getRequestDispatcher("/login.jsp").include(request, response);
         }
         else{
             Users user = (Users) result.get(0);
@@ -59,17 +62,18 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("data", "Bem vindo" + name);
                 HttpSession httpSession = request.getSession();
                 httpSession.setAttribute("name", name);
+
+                request.getRequestDispatcher("/header.jsp").include(request, response);
+                response.sendRedirect("profile");
             }
             else{
-                request.setAttribute("data", "Senha inválida");
+                request.setAttribute("error", "Senha inválida");
+                request.getRequestDispatcher("/login.jsp").include(request, response);
             }
         }
 //        Users u = (Users) query.get(0);
         
         session.close();
-
-        request.getRequestDispatcher("/header.jsp").include(request, response);
-        response.sendRedirect("profile");
     }
 
 }

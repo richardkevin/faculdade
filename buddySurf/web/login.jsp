@@ -24,6 +24,14 @@
                 Password: <input type='text' name='password'> <br/>
                 <input type='submit' value='Login'>
             </form>
+
+            <div class="errors">
+                <%
+                    String error = (String) request.getAttribute("error");
+                    if (error != null) {
+                        out.println(error);
+                } %>
+            </div11>
         </div>
     </body>
 </html>
