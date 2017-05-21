@@ -11,6 +11,7 @@
             <a href="login">Entrar</a>
         <% } else { %>
             Olá <a href="profile"><%= request.getAttribute("name") %></a>
+            <a href="logout">Logout</a>
         <% } %>
     </div>
 </div>
