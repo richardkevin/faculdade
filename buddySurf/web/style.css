@@ -1,103 +1,12 @@
-body{
-    margin: 0;
-    color: #555;
-}
-table {
-    border-collapse: collapse;
-}
-tr:hover {
-    background-color: #ededed;
-}
-th, td {
-    padding: 5px;
-}
-.btn{
-    border: 2px solid #555;
-    border-radius: 4px;
-    color: #555;
-    display: inline-block;
-    margin: 5px;
-    padding: 5px;
-}
-.btn:hover {
-    background-color: #555;
-    color: #fff;
-}
-.container {
-    display: flex;
-    justify-content: center;
-}
-.center {
-    text-align: center;
-}
-.circular {
-    background: white no-repeat;
-    border-radius: 50%;
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-}
-.main{
-    margin: 0 95px;
-}
-.menuBar{
+.sidebar img {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
     align-items: center;
-    background-color: #090808;
-    display: -webkit-flex;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
 }
-.navBar{
-    display: flex;
-    margin-bottom: 10px;
-}
-.navBar a{
-    text-decoration: none;
-}
-.navBar a:visited {
-    color: inherit;
-}
-.navBar a:nth-child(2) {
-    margin: 0 25px;
-}
-.navBarItem{
-    border-bottom: 3px solid transparent;
-    cursor: pointer;
-    font-weight: bold;
-    padding-bottom: 5px;
-}
-.navBarItem:hover{
-    border-bottom: 3px solid #555;
-}
-.logo{
-    color: #fff;
-    font-weight: bold;
-}
-.results{
-    margin: auto;
-    text-align: left;
-}
-/*stars rate*/
-.star input{
-    display: flex;
-}
-.search{
-    position: relative;
-}
-.search input{
-    border: none;
-    height: 25px;
-    margin-bottom: 20px;
-    text-align: center;
-    text-indent: 30px;
-    width: 100%;
-}
-.search .fa-search {
-  position: absolute;
-  top: 24px;
-  left: 7px;
-  font-size: 15px;
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
 }

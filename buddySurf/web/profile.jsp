@@ -8,16 +8,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>BuddySurf</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <%@ include file="head.jsp" %>
     </head>
     <body>
         <%@ include file="header.jsp" %>
-        <h1>Olá <%= request.getAttribute("name") %> !</h1>
-        
-        <h2>Veja suas avaliações</h2>
-        
+
+        <div class="container-fluid">
+            <div class="col-md-2 sidebar">
+                <div class="sidebar-content">
+                    <img src="https://pbs.twimg.com/profile_images/656239066220855296/UYTxg0GV_400x400.png" alt="" class="img-circle">
+
+                    <h1>Olá <%= request.getAttribute("name") %> !</h1>
+                    <ul>
+                        <li>Sobre</li>
+                        <li>Viagens</li>
+                        <li>Acomodações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <h2>Veja suas avaliações</h2>
+            </div>
+        </div>
     </body>
 </html>
