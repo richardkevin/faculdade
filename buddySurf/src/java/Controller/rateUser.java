@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,31 +22,41 @@ import org.hibernate.Transaction;
  */
 @WebServlet(name = "rateUser", urlPatterns = {"/rateUser"})
 public class rateUser extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/rateUser.jsp").forward(request, response);
-    }
-
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Session session = HibernateSessionFactory.getSession();
+
+        Query query = session.getNamedQuery("Users.findAll");
+        List<Users> userList = query.list();
+        request.setAttribute("userList", userList);
+
+        request.getRequestDispatcher("/rateUser.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            int type = Integer.parseInt(request.getParameter("type"));
-            String description = request.getParameter("description");
-            int stars = Integer.parseInt(request.getParameter("rate"));
-
             Session session = HibernateSessionFactory.getSession();
+            HttpSession httpSession = request.getSession(false);
+            Users user_logged = (Users) httpSession.getAttribute("user");
+
+            String description = request.getParameter("description");
+            int type = Integer.parseInt(request.getParameter("type"));
+            int stars = Integer.parseInt(request.getParameter("rate"));
+            Long sender_id = user_logged.getId();
+            Long receiver_id = Long.parseLong(request.getParameter("user_selected"));
+
+            Query query = session.getNamedQuery("Users.findById");
+
+            Users sender = (Users) query.setParameter("id", sender_id).uniqueResult();
+            Users receiver = (Users) query.setParameter("id", receiver_id).uniqueResult();
 
             Rating r = new Rating();
             r.setType(type);
             r.setDescription(description);
             r.setStars(stars);
+            r.setSender(sender);
+            r.setReceiver(receiver);
 
             Transaction tx = session.beginTransaction();
             session.saveOrUpdate(r);

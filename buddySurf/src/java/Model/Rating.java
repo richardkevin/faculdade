@@ -8,13 +8,10 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-
-
 
 
 /**
@@ -32,32 +29,35 @@ public class Rating implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "rate_id", unique=true, nullable = false)
-    private int id;
+    private Long id;
     @Column
     private int type;
     @Column
     private String description;
     @Column
     private int stars;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private Users user;
+    @OneToOne
+    private Users sender;
+    @OneToOne
+    private Users receiver;
 
-    public Rating() {
-    }
-
-    public Rating(int id, int type, String description, int stars) {
+    public Rating(Long id, int type, String description, int stars, Users sender, Users receiver) {
         this.id = id;
         this.type = type;
         this.description = description;
         this.stars = stars;
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
-    public int getId() {
+    public Rating() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,5 +83,21 @@ public class Rating implements Serializable{
 
     public void setStars(int stars) {
         this.stars = stars;
+    }
+
+    public Users getSender() {
+        return sender;
+    }
+
+    public void setSender(Users sender) {
+        this.sender = sender;
+    }
+
+    public Users getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Users receiver) {
+        this.receiver = receiver;
     }
 }

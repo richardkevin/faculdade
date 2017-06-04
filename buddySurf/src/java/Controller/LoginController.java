@@ -35,7 +35,6 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
@@ -59,9 +58,9 @@ public class LoginController extends HttpServlet {
             Users user = (Users) result.get(0);
             if (user.getPassword().equals(password)){
                 String name = user.getName();
-                request.setAttribute("data", "Bem vindo" + name);
                 HttpSession httpSession = request.getSession();
                 httpSession.setAttribute("name", name);
+                httpSession.setAttribute("user", user);
 
                 request.getRequestDispatcher("/header.jsp").include(request, response);
                 response.sendRedirect("profile");

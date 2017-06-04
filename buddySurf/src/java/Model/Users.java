@@ -1,7 +1,5 @@
 package Model;
 
-
-
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -24,6 +22,7 @@ import javax.persistence.Table;
 @Table(name = "users")
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u where u.id = :id"),
     @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u where u.name = :name"),
     @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u where u.username = :username")})
 public class Users implements Serializable {
@@ -43,8 +42,6 @@ public class Users implements Serializable {
     private String address;
     @Column
     private int max_guests;
-    @OneToMany(mappedBy = "user", targetEntity = Rating.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Rating> rates;
     
     public Users(){
     }
