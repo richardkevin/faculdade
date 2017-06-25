@@ -52,7 +52,6 @@ public class LoginController extends HttpServlet {
         
         if (result.isEmpty()){
             request.setAttribute("error", "Usuário inválido");
-            request.getRequestDispatcher("/login.jsp").include(request, response);
         }
         else{
             Users user = (Users) result.get(0);
@@ -67,10 +66,10 @@ public class LoginController extends HttpServlet {
             }
             else{
                 request.setAttribute("error", "Senha inválida");
-                request.getRequestDispatcher("/login.jsp").include(request, response);
             }
         }
-//        Users u = (Users) query.get(0);
+
+        request.getRequestDispatcher("/login.jsp").include(request, response);
         
         session.close();
     }
