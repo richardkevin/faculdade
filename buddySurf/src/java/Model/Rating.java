@@ -3,14 +3,13 @@ package Model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -24,7 +23,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Rating.findAll", query = "SELECT r FROM Rating r"),
     @NamedQuery(name = "Rating.findById", query = "SELECT r FROM Rating r where r.id = :id"),
     @NamedQuery(name = "Rating.findByType", query = "SELECT r FROM Rating r where r.type = :type"),
-    @NamedQuery(name = "Rating.findByStars", query = "SELECT r FROM Rating r where r.stars = :stars")})
+    @NamedQuery(name = "Rating.findByStars", query = "SELECT r FROM Rating r where r.stars = :stars"),
+    @NamedQuery(name = "Rating.findByReceiver", query = "SELECT r FROM Rating r where r.receiver.id = :receiver_id"),
+})
 public class Rating implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -36,9 +37,11 @@ public class Rating implements Serializable{
     private String description;
     @Column
     private int stars;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "sender_user_id")
     private Users sender;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "receiver_user_id")
     private Users receiver;
 
     public Rating(Long id, int type, String description, int stars, Users sender, Users receiver) {

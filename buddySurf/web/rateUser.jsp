@@ -44,5 +44,6 @@
             Descrição: <textarea rows='2' cols='20' name='description'> </textarea><br/>
             <input type='submit' value='Enviar'>
         </form>
+            <%= request.getAttribute("userList") %>
     </body>
 </html>

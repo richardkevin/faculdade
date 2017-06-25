@@ -24,11 +24,25 @@ import org.hibernate.Transaction;
 public class rateUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Session session = HibernateSessionFactory.getSession();
+        HttpSession httpSession = request.getSession(false);
+	if (httpSession != null) {
+            Users user = (Users) httpSession.getAttribute("user");
+            request.setAttribute("user", user);
+            Session session = HibernateSessionFactory.getSession();
 
-        Query query = session.getNamedQuery("Users.findAll");
-        List<Users> userList = query.list();
-        request.setAttribute("userList", userList);
+            Query query = session.getNamedQuery("Users.findAll");
+            List<Users> userList = query.list();
+            long userId = user.getId();
+            
+            for (Users u : userList) {
+                if (u.getId() == userId) {
+                    userList.remove(u);
+                    break;
+                }
+            }
+
+            request.setAttribute("userList", userList);
+        }
 
         request.getRequestDispatcher("/rateUser.jsp").forward(request, response);
     }

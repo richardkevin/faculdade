@@ -42,6 +42,10 @@ public class Users implements Serializable {
     private String address;
     @Column
     private int max_guests;
+    @OneToMany(mappedBy="sender")
+    private List<Rating> senders;
+    @OneToMany(mappedBy="receiver")
+    private List<Rating> receivers;
     
     public Users(){
     }
@@ -56,59 +60,77 @@ public class Users implements Serializable {
         this.max_guests = max_guests;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setMax_guests(int max_guests) {
-        this.max_guests = max_guests;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getAddress() {
         return address;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public int getMax_guests() {
         return max_guests;
     }
+
+    public void setMax_guests(int max_guests) {
+        this.max_guests = max_guests;
+    }
+
+    public List<Rating> getSenders() {
+        return senders;
+    }
+
+    public void setSenders(List<Rating> senders) {
+        this.senders = senders;
+    }
+
+    public List<Rating> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(List<Rating> receivers) {
+        this.receivers = receivers;
+    }
+
+    
 }
