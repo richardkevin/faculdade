@@ -35,25 +35,31 @@
 
             <div class="col-md-8">
                 <h2>Veja suas avaliações</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Usuário</th>
-                            <!--<th>Tipo</th>-->
-                            <th>Descrição</th>
-                            <th>Avaliação</th>
-                        </tr>
-                    </thead>
+                
+                <% List<Rating> listRates = (List<Rating>) request.getAttribute("listRates"); %>
+                    <% if (listRates.isEmpty()) { %>
+                        <p>Não há avaliações</p>
+                    <% } else { %>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <!--<th>Tipo</th>-->
+                                <th>Descrição</th>
+                                <th>Avaliação</th>
+                            </tr>
+                        </thead>
                     <tbody>
-                        <% for (Rating rate : (List<Rating>) request.getAttribute("listRates")) { %>
-                        <tr>
-                            <td><%= rate.getSender().getName() %></td>
-                            <!--<td><%= rate.getType() %></td>-->
-                            <td><%= rate.getDescription() %></td>
-                            <td><%= rate.getStars() %></td>
+                        <% for (Rating rate : listRates) { %>
+                            <tr>
+                                <td><%= rate.getSender().getName() %></td>
+                                <!--<td><%= rate.getType() %></td>-->
+                                <td><%= rate.getDescription() %></td>
+                                <td><%= rate.getStars() %></td>
+                                </tr>
                         <% } %>
-                        </tr>
-                </table>
+                    </table>
+                    <% } %>
             </div>
         </div>
     </body>
