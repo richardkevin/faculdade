@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "users")
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-    @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u where u.id = :id"),
+    @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u where u.id = :userId"),
     @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u where u.name = :name"),
     @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u where u.username = :username")})
 public class Users implements Serializable {
@@ -46,7 +46,7 @@ public class Users implements Serializable {
     private List<Rating> senders;
     @OneToMany(mappedBy="receiver")
     private List<Rating> receivers;
-    
+
     public Users(){
     }
 
@@ -131,6 +131,4 @@ public class Users implements Serializable {
     public void setReceivers(List<Rating> receivers) {
         this.receivers = receivers;
     }
-
-    
 }
