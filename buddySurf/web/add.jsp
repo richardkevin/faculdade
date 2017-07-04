@@ -15,11 +15,11 @@
 
         <h1>Cadastre-se</h1>
         <form action='add' method='POST'>
-        Nome: <input type='text' name='name' > <br/>
-        Username: <input type='text' name='username' > <br/>
-        Password: <input type='text' name='password' > <br/>
+            Nome: <input type='text' name='name' maxlength="50"> <span>Máximo de caracteres: 50</span> <br/>
+        Username: <input type='text' name='username' maxlength="20"> <span>Máximo de caracteres: 20</span><br/>
+        Password: <input type='text' name='password' maxlength="10"> <span>Máximo de caracteres: 10</span><br/>
         Idade: <input type='text' name='age' > <br/>
-        Endereço: <input type='text' name='address' > <br/>
+        Endereço: <input type='text' name='address' maxlength="10"> <span>Máximo de caracteres: 10</span><br/>
         Max Guests: <select id='max_guests' name='max_guests'>
             <option value='0'>Não permitir</option>
             <option value='1'>1 Hóspede</option>
@@ -33,7 +33,6 @@
             <option value='9'>9 Hóspedes</option>
             <option value='10'>10 Hóspedes</option>
         </select> <br/>
-
         <div>
 
         </div>
