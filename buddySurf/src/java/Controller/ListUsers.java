@@ -21,7 +21,7 @@ import org.hibernate.Session;
  *
  * @author richard
  */
-@WebServlet(name = "ListUsers", urlPatterns = {"/ListUsers", "/listusers"})
+@WebServlet(name = "ListUsers", urlPatterns = {"/List-Users", "/list-users"})
 public class ListUsers extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
