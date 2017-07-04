@@ -16,7 +16,7 @@
         <%@ include file="header.jsp" %>
 
         <h1>Avaliar Usuário</h1>
-        <form action='rateUser' method='POST'>
+        <form action='rate-user' method='POST'>
             Usuário: <select name="user_selected">
                 <% for (Users user : (List<Users>) request.getAttribute("userList")) { %>
                 <option value=<%= user.getId() %>>
