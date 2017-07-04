@@ -23,7 +23,7 @@ import org.hibernate.Session;
  *
  * @author richard
  */
-@WebServlet(name = "Profile", urlPatterns = {"/Profile", "/profile"})
+@WebServlet(name = "Profile", urlPatterns = {"/Profile", "/profile", "/profile/*"})
 public class Profile extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,6 +34,12 @@ public class Profile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String pathParam = request.getPathInfo();
+
+        if (pathParam != null) {
+            request.setAttribute("hideSidebar", true);
+        }
+
         HttpSession httpSession = request.getSession(false);
 	if (httpSession != null) {
             Users user = (Users) httpSession.getAttribute("user");

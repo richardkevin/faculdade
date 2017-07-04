@@ -14,27 +14,26 @@
     </head>
     <body>
         <%@ include file="header.jsp" %>
+        <% Users user = (Users) request.getAttribute("user"); %>
 
         <div class="container-fluid">
-            <div class="col-md-2 sidebar">
-                <div class="sidebar-content">
-                    <img src="https://pbs.twimg.com/profile_images/656239066220855296/UYTxg0GV_400x400.png" alt="" class="img-circle">
+            <% if (request.getAttribute("hideSidebar") == null) { %>
+                <div class="col-md-2 sidebar">
+                    <div class="sidebar-content">
+                        <img src="https://pbs.twimg.com/profile_images/656239066220855296/UYTxg0GV_400x400.png" alt="" class="img-circle">
 
-                    <% Users user = (Users) request.getAttribute("user"); %>
-                    <h1>Olá <%= user.getName() %> !</h1>
-                    <ul>
-                        <li>
-                            <a href="rateUser">Avaliar</a>
-                        </li>
-                        <li>Sobre</li>
-                        <li>Viagens</li>
-                        <li>Acomodações</li>
-                    </ul>
+                        <h1>Olá <%= user.getName() %> !</h1>
+                        <ul>
+                            <li><a>Amigos</a></li>
+                            <li><a>Sobre</a></li>
+                            <li><a>Buscar Hospedagem</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            <% } %>
 
             <div class="col-md-8">
-                <h2>Veja suas avaliações</h2>
+                <h2>Avaliações</h2>
                 
                 <% List<Rating> listRates = (List<Rating>) request.getAttribute("listRates"); %>
                     <% if (listRates.isEmpty()) { %>
@@ -61,6 +60,13 @@
                     </table>
                     <% } %>
             </div>
+
+            <% if (user.getMax_guests() != 0) { %>
+            <div class="col-md-8">
+                <h2>Acomodações</h2>
+                <span>ver todas</span>
+            </div>
+            <% } %>
         </div>
     </body>
 </html>
