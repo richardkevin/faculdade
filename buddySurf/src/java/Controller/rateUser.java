@@ -18,7 +18,7 @@ import org.hibernate.Transaction;
  *
  * @author richard
  */
-@WebServlet(name = "rateUser", urlPatterns = {"/rate-User", "/rate-User/*"})
+@WebServlet(name = "rateUser", urlPatterns = {"/rate-user", "/rate-user/*", "/avaliar-usuario", "/avaliar-usuario/*"})
 public class rateUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -20,7 +20,7 @@ import org.hibernate.Session;
  *
  * @author richard.correa
  */
-@WebServlet(name = "Accommodation", urlPatterns = {"/my-Accommodations", "/my-accommodations", "/minhas-acomodacoes"})
+@WebServlet(name = "Accommodation", urlPatterns = {"/my-accommodations", "/minhas-acomodacoes"})
 public class Accommodation extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
