@@ -3,9 +3,7 @@ package Controller;
 import Model.Rating;
 import Model.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,28 +18,37 @@ import org.hibernate.Transaction;
  *
  * @author richard
  */
-@WebServlet(name = "rateUser", urlPatterns = {"/rateUser"})
+@WebServlet(name = "rateUser", urlPatterns = {"/rateUser", "/rateUser/*"})
 public class rateUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession(false);
+        String pathParam = request.getPathInfo();
+
 	if (httpSession != null) {
             Users user = (Users) httpSession.getAttribute("user");
             request.setAttribute("user", user);
             Session session = HibernateSessionFactory.getSession();
 
-            Query query = session.getNamedQuery("Users.findAll");
-            List<Users> userList = query.list();
-            long userId = user.getId();
-            
-            for (Users u : userList) {
-                if (u.getId() == userId) {
-                    userList.remove(u);
-                    break;
-                }
-            }
+            if (pathParam != null) {
+                long userId = Long.parseLong(pathParam.replace("/", ""));
+                Query query = session.getNamedQuery("Users.findById").setParameter("userId", userId);
 
-            request.setAttribute("userList", userList);
+                request.setAttribute("userList", query.list());
+            } else {
+                Query query = session.getNamedQuery("Users.findAll");
+                List<Users> userList = query.list();
+                long userId = user.getId();
+            
+                for (Users u : userList) {
+                    if (u.getId() == userId) {
+                        userList.remove(u);
+                        break;
+                    }
+                }
+
+                request.setAttribute("userList", userList);
+            }
         }
 
         request.getRequestDispatcher("/rateUser.jsp").forward(request, response);
