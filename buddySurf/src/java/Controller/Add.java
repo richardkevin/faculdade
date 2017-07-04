@@ -4,7 +4,6 @@ package Controller;
 
 import Model.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,15 +19,10 @@ import org.hibernate.Transaction;
 @WebServlet(name = "add", urlPatterns = {"/add"})
 public class Add extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/add.jsp").forward(request, response);
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("/add.jsp").forward(request, response);
     }
 
     @Override
@@ -56,7 +50,8 @@ public class Add extends HttpServlet {
             tx.commit();
             session.flush();
             session.close();
-            request.getRequestDispatcher("/add_redirect.jsp").forward(request, response);
+
+            response.sendRedirect("login");
     }
 
 }
