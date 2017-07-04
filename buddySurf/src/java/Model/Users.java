@@ -2,10 +2,8 @@ package Model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -50,7 +48,7 @@ public class Users implements Serializable {
     public Users(){
     }
 
-    public Users(Long id, String username, String password, int age, String address, int max_guests){
+    public Users(Long id, String username, String name, String password, int age, String address, int max_guests){
         this.id = id;
         this.name = name;
         this.username = username;

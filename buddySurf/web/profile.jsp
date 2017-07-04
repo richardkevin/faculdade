@@ -26,7 +26,7 @@
                         <ul>
                             <li><a>Amigos</a></li>
                             <li><a>Sobre</a></li>
-                            <li><a>Buscar Hospedagem</a></li>
+                            <% if (user.getMax_guests() != 0) { %><li><a href="my-accommodations">Hospedagens</a></li><% } %>
                         </ul>
                     </div>
                 </div>

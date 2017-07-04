@@ -48,5 +48,6 @@ Contributor(s):
     <property name="show_sql">true</property>
     <mapping class="Model.Users"/>
     <mapping class="Model.Rating"/>
+    <mapping class="Model.Accommodation"/>
   </session-factory>
 </hibernate-configuration>

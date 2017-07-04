@@ -21,8 +21,8 @@
             </div>
 
             <ul class="nav nav-tabs">
-                <li role="presentation"><a href="acommodation">Acomodações</a></li>
-                <li role="presentation" class="active"><a href="listusers">Usuários</a></li>
+                <li role="presentation"><a href="accommodation">Acomodações</a></li>
+                <li role="presentation" class="active"><a href="list-users">Usuários</a></li>
             </ul>
         </div>
 
@@ -41,7 +41,7 @@
             <tbody>
                 <% for (Users user : listUsers) { %>
                     <tr>
-                        <td><a href="rateUser/<%= user.getId() %>">@</a></td>
+                        <td><a href="rate-user/<%= user.getId() %>">@</a></td>
                         <td><a href="profile/<%= user.getId() %>"><%= user.getUsername() %></a></td>
                         <td><a href="profile/<%= user.getId() %>"><%= user.getName() %></a></td>
                     </tr>

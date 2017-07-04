@@ -20,8 +20,8 @@
             </div>
 
             <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="acommodation">Acomodações</a></li>
-                <li role="presentation" class=""><a href="listusers">Usuários</a></li>
+                <li role="presentation" class="active"><a href="accommodation">Acomodações</a></li>
+                <li role="presentation" class=""><a href="list-users">Usuários</a></li>
             </ul>
         </div>
     </body>
