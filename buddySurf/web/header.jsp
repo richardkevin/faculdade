@@ -13,7 +13,7 @@
             <a class="btn btn-default navbar-btn" href="add">Cadastre-se</a>
             <a class="btn btn-default navbar-btn" href="login">Entrar</a>
         <% } else { %>
-        <a href="profile">
+        <a href="/buddySurf/profile">
             <span>
                 <% Users u = (Users) session.getAttribute("user"); %>
                 <%= u.getName() %>
