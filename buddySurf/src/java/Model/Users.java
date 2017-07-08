@@ -38,8 +38,8 @@ public class Users implements Serializable {
     private int age;
     @Column
     private String address;
-    @Column
-    private int max_guests;
+    @Column(name = "allow_guest")
+    private boolean allowGuest;
     @OneToMany(mappedBy="sender")
     private List<Rating> senders;
     @OneToMany(mappedBy="receiver")
@@ -48,14 +48,14 @@ public class Users implements Serializable {
     public Users(){
     }
 
-    public Users(Long id, String username, String name, String password, int age, String address, int max_guests){
+    public Users(Long id, String name, String username, String password, int age, String address, boolean allowGuest) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
         this.age = age;
         this.address = address;
-        this.max_guests = max_guests;
+        this.allowGuest = allowGuest;
     }
 
     public Long getId() {
@@ -106,12 +106,12 @@ public class Users implements Serializable {
         this.address = address;
     }
 
-    public int getMax_guests() {
-        return max_guests;
+    public boolean isAllowGuest() {
+        return allowGuest;
     }
 
-    public void setMax_guests(int max_guests) {
-        this.max_guests = max_guests;
+    public void setAllowGuest(boolean allowGuest) {
+        this.allowGuest = allowGuest;
     }
 
     public List<Rating> getSenders() {

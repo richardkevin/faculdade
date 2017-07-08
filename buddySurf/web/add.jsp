@@ -20,22 +20,8 @@
         Password: <input type='text' name='password' maxlength="10"> <span>Máximo de caracteres: 10</span><br/>
         Idade: <input type='text' name='age' > <br/>
         Endereço: <input type='text' name='address' maxlength="10"> <span>Máximo de caracteres: 10</span><br/>
-        Max Guests: <select id='max_guests' name='max_guests'>
-            <option value='0'>Não permitir</option>
-            <option value='1'>1 Hóspede</option>
-            <option value='2'>2 Hóspedes</option>
-            <option value='3'>3 Hóspedes</option>
-            <option value='4'>4 Hóspedes</option>
-            <option value='5'>5 Hóspedes</option>
-            <option value='6'>6 Hóspedes</option>
-            <option value='7'>7 Hóspedes</option>
-            <option value='8'>8 Hóspedes</option>
-            <option value='9'>9 Hóspedes</option>
-            <option value='10'>10 Hóspedes</option>
-        </select> <br/>
-        <div>
+        Max Guests: <input type="checkbox" name='allowGuest'> <br/>
 
-        </div>
         <input type='submit' value='Enviar'>
         </form>
     </body>

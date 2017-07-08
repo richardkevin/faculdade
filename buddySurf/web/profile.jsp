@@ -26,7 +26,7 @@
                         <ul>
                             <li><a>Amigos</a></li>
                             <li><a>Sobre</a></li>
-                            <% if (user.getMax_guests() != 0) { %><li><a href="my-accommodations">Hospedagens</a></li><% } %>
+                            <% if (user.isAllowGuest()) { %><li><a href="my-accommodations">Hospedagens</a></li><% } %>
                         </ul>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <% } %>
             </div>
 
-            <% if (user.getMax_guests() != 0) { %>
+            <% if (user.isAllowGuest()) { %>
             <div class="col-md-8">
                 <h2>Acomodações</h2>
                 <span>ver todas</span>

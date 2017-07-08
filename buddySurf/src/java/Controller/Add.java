@@ -33,7 +33,6 @@ public class Add extends HttpServlet {
             String password = request.getParameter("password");
             int age = Integer.parseInt(request.getParameter("age"));
             String address = request.getParameter("address");
-            int max_guests = Integer.parseInt(request.getParameter("max_guests"));
 
             Session session = HibernateSessionFactory.getSession();
 
@@ -43,7 +42,9 @@ public class Add extends HttpServlet {
             u.setPassword(password);
             u.setAge(age);
             u.setAddress(address);
-            u.setMax_guests(max_guests);
+            if (request.getParameter("allowGuest") != null) {
+                u.setAllowGuest(true);
+            }
 
             Transaction tx = session.beginTransaction();
             session.saveOrUpdate(u);

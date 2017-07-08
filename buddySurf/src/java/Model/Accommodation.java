@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,10 +30,19 @@ public class Accommodation implements Serializable {
     private String country;
     @Column
     private String city;
+    @Column
+    private String dt_start;
+    @Column
+    private String dt_end;
+    @Column(name = "max_guests")
+    private int maxGuests;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "owner_id")
     private Users owner;
+
+    public Accommodation() {
+    }
 
     public Long getId() {
         return id;
@@ -58,11 +68,45 @@ public class Accommodation implements Serializable {
         this.city = city;
     }
 
+    public String getDt_start() {
+        return dt_start;
+    }
+
+    public void setDt_start(String dt_start) {
+        this.dt_start = dt_start;
+    }
+
+    public String getDt_end() {
+        return dt_end;
+    }
+
+    public void setDt_end(String dt_end) {
+        this.dt_end = dt_end;
+    }
+
+    public int getMaxGuests() {
+        return maxGuests;
+    }
+
+    public void setMaxGuests(int maxGuests) {
+        this.maxGuests = maxGuests;
+    }
+
     public Users getOwner() {
         return owner;
     }
 
     public void setOwner(Users owner) {
+        this.owner = owner;
+    }
+
+    public Accommodation(Long id, String country, String city, String dt_start, String dt_end, int maxGuests, Users owner) {
+        this.id = id;
+        this.country = country;
+        this.city = city;
+        this.dt_start = dt_start;
+        this.dt_end = dt_end;
+        this.maxGuests = maxGuests;
         this.owner = owner;
     }
 }
