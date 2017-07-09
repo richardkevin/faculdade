@@ -22,12 +22,7 @@
                     <div class="sidebar-content">
                         <img src="https://pbs.twimg.com/profile_images/656239066220855296/UYTxg0GV_400x400.png" alt="" class="img-circle">
 
-                        <h1>Olá <%= user.getName() %> !</h1>
-                        <ul>
-                            <li><a>Amigos</a></li>
-                            <li><a>Sobre</a></li>
-                            <% if (user.isAllowGuest()) { %><li><a href="my-accommodations">Hospedagens</a></li><% } %>
-                        </ul>
+                        <h1>Olá <%= user.getName() %>!</h1>
                     </div>
                 </div>
             <% } %>
@@ -64,7 +59,7 @@
             <% if (user.isAllowGuest()) { %>
             <div class="col-md-8">
                 <h2>Acomodações</h2>
-                <span>ver todas</span>
+                <span><a href="my-accommodations">ver todas</a></span>
             </div>
             <% } %>
         </div>

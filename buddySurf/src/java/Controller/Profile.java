@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Model.Rating;
@@ -52,7 +47,7 @@ public class Profile extends HttpServlet {
             request.setAttribute("listRates", query.list());
         }
         else {
-            request.getRequestDispatcher("login.html").include(request, response);
+            request.getRequestDispatcher("login.jsp").include(request, response);
         }
         processRequest(request, response);
     }

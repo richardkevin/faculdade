@@ -21,8 +21,8 @@
             </div>
 
             <ul class="nav nav-tabs">
-                <li role="presentation"><a href="accommodation">Acomodações</a></li>
-                <li role="presentation" class="active"><a href="list-users">Usuários</a></li>
+                <li role="presentation"><a href="/buddySurf">Acomodações</a></li>
+                <li role="presentation" class="active"><a href="users">Usuários</a></li>
             </ul>
         </div>
 

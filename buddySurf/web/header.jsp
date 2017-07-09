@@ -8,17 +8,16 @@
     </a>
 
     <div class="nav navbar-nav navbar-right">
-        
         <% if (session.getAttribute("name") == null) { %>
             <a class="btn btn-default navbar-btn" href="add">Cadastre-se</a>
             <a class="btn btn-default navbar-btn" href="login">Entrar</a>
         <% } else { %>
-        <a href="/buddySurf/profile">
-            <span>
-                <% Users u = (Users) session.getAttribute("user"); %>
-                <%= u.getName() %>
-            </span>
-        </a>
+            <a href="/buddySurf/profile">
+                <span>
+                    <% Users u = (Users) session.getAttribute("user"); %>
+                    <%= u.getName() %>
+                </span>
+            </a>
             <a class="btn btn-default navbar-btn" href="logout">Logout</a>
         <% } %>
     </div>

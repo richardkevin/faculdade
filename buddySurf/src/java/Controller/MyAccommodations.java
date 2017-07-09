@@ -8,6 +8,7 @@ package Controller;
 import Model.Accommodation;
 import Model.Users;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,10 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author richard.correa
+ * @author richard
  */
-@WebServlet(name = "Accommodation", urlPatterns = {"/my-accommodations", "/my-accommodations/*"})
-public class Accommodations extends HttpServlet {
+@WebServlet(name = "MyAccommodations", urlPatterns = {"/my-accommodations", "/my-accommodations/*"})
+public class MyAccommodations extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,21 +34,15 @@ public class Accommodations extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession httpSession = request.getSession(false);
         String pathParam = request.getPathInfo();
 
         if (pathParam != null) {
             request.getRequestDispatcher("/addAccommodation.jsp").forward(request, response);
-        }
-        
-        if (httpSession != null) {
-            Users user = (Users) httpSession.getAttribute("user");
-            request.setAttribute("user", user);
-            
+        } else {
             Session session = HibernateSessionFactory.getSession();
             Query query = session.getNamedQuery("Accommodation.findAll");
-            
-            request.setAttribute("accomodations", query.list());
+
+            request.setAttribute("accommodations", query.list());
         }
         processRequest(request, response);
     }

@@ -14,7 +14,7 @@
         <%@ include file="header.jsp" %>
 
         <h1>Criar Hospedagem</h1>
-        <form action='myAccommodations' method="POST">
+        <form action="my-accommodations" method="POST">
             País: <input type="text" name="country"> <br/>
             Cidade: <input type="text" name="city"> <br/>
             Hóspedes: <input type="number" name="maxGuests"> <br/>
