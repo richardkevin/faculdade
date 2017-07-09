@@ -2,8 +2,10 @@ package Model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -44,6 +46,8 @@ public class Users implements Serializable {
     private List<Rating> senders;
     @OneToMany(mappedBy="receiver")
     private List<Rating> receivers;
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="guest")
+    private List<Booking> users;
 
     public Users(){
     }

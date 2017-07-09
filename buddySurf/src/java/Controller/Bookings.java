@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Model.Accommodation;
+import Model.Booking;
 import Model.Users;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -22,12 +18,12 @@ import org.hibernate.Transaction;
  *
  * @author richard
  */
-@WebServlet(name = "MyAccommodations", urlPatterns = {"/my-accommodations", "/my-accommodations/*"})
-public class MyAccommodations extends HttpServlet {
+@WebServlet(name = "Bookings", urlPatterns = {"/booking/*"})
+public class Bookings extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/myAccommodations.jsp").forward(request, response);
+        request.getRequestDispatcher("/booking.jsp").forward(request, response);
     }
 
     @Override
@@ -36,13 +32,13 @@ public class MyAccommodations extends HttpServlet {
         String pathParam = request.getPathInfo();
 
         if (pathParam != null) {
-            request.getRequestDispatcher("/addAccommodation.jsp").forward(request, response);
-        } else {
             Session session = HibernateSessionFactory.getSession();
-            Query query = session.getNamedQuery("Accommodation.findAll");
-
-            request.setAttribute("accommodations", query.list());
+            long accomId = Long.parseLong(pathParam.replace("/", ""));
+            Query query = session.getNamedQuery("Accommodation.findById").setParameter("accommodation_id", accomId);
+            request.setAttribute("accommodation", query.uniqueResult());
             processRequest(request, response);
+        } else {
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
@@ -51,30 +47,30 @@ public class MyAccommodations extends HttpServlet {
             throws ServletException, IOException {
         Session session = HibernateSessionFactory.getSession();
         HttpSession httpSession = request.getSession(false);
+
         Users userLogged = (Users) httpSession.getAttribute("user");
 
-        String country = request.getParameter("country");
-        String city = request.getParameter("city");
-        int maxGuests = Integer.parseInt(request.getParameter("maxGuests"));
-        int guestPrice = Integer.parseInt(request.getParameter("guest_price"));
+        String pathParam = request.getPathInfo();
+        long accomId = Long.parseLong(pathParam.replace("/", ""));
+        Query query = session.getNamedQuery("Accommodation.findById").setParameter("accommodation_id", accomId);
+        Accommodation accom = (Accommodation) query.uniqueResult();
 
-        String dt_start = request.getParameter("dt_start");
-        String dt_end = request.getParameter("dt_end");
-        
-        Accommodation a = new Accommodation();
-        a.setCountry(country);
-        a.setCity(city);
-        a.setDt_start(dt_start);
-        a.setDt_end(dt_end);
-        a.setMaxGuests(maxGuests);
-        a.setGuestPrice(guestPrice);
-        a.setOwner(userLogged);
+        int guestQty = Integer.parseInt(request.getParameter("maxGuests"));
+        String dt_checkin = request.getParameter("dt_start");
+        String dt_checkout = request.getParameter("dt_end");
+
+        Booking b = new Booking();
+        b.setAccommodation(accom);
+        b.setDt_checkin(dt_checkin);
+        b.setDt_checkout(dt_checkout);
+        b.setGuest(userLogged);
+        b.setGuestQty(guestQty);
 
         Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(a);
+        session.saveOrUpdate(b);
         tx.commit();
         session.flush();
         session.close();
-        response.sendRedirect("profile");
+        response.sendRedirect("/buddySurf/profile");
     }
 }

@@ -15,7 +15,7 @@
     <body>
         <%@ include file="header.jsp" %>
         <% List<Accommodation> accommodations = (List<Accommodation>) request.getAttribute("accommodations"); %>
-        
+
         <div class="container-fluid">
             <div class="form-group has-feedback">
                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
@@ -24,11 +24,11 @@
 
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="/buddySurf">Acomodações</a></li>
-                <li role="presentation" class=""><a href="users">Usuários</a></li>
+                <li role="presentation" class=""><a href="buddySurf/users">Usuários</a></li>
             </ul>
 
             <div>
-                <% if (accommodations.isEmpty()) { %>
+                <% if (request.getAttribute("accommodations") == null || accommodations.isEmpty()) { %>
                     <p>Não há acomodações</p>
                 <% } else { %>
                     <table>
@@ -51,7 +51,7 @@
                                 <td><%= accom.getDt_start() %></td>
                                 <td><%= accom.getDt_end() %></td>
                                 <td><%= accom.getOwner().getUsername() %></td>
-                                <td><a href="reservation">Reservar</a></td>
+                                <td><a href="buddySurf/booking/<%= accom.getId() %>">Reservar</a></td>
                                 </tr>
                         <% } %>
                     </table>

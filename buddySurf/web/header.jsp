@@ -9,8 +9,8 @@
 
     <div class="nav navbar-nav navbar-right">
         <% if (session.getAttribute("name") == null) { %>
-            <a class="btn btn-default navbar-btn" href="add">Cadastre-se</a>
-            <a class="btn btn-default navbar-btn" href="login">Entrar</a>
+            <a class="btn btn-default navbar-btn" href="/buddySurf/add">Cadastre-se</a>
+            <a class="btn btn-default navbar-btn" href="/buddySurf/login">Entrar</a>
         <% } else { %>
             <a href="/buddySurf/profile">
                 <span>
@@ -18,7 +18,7 @@
                     <%= u.getName() %>
                 </span>
             </a>
-            <a class="btn btn-default navbar-btn" href="logout">Logout</a>
+            <a class="btn btn-default navbar-btn" href="/buddySurf/logout">Logout</a>
         <% } %>
     </div>
   </div>

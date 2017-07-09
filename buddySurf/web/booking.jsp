@@ -1,9 +1,10 @@
 <%-- 
-    Document   : addAccommodation
-    Created on : Jul 7, 2017, 11:57:16 AM
-    Author     : richard.correa
+    Document   : reservation
+    Created on : 08/07/2017, 19:00:39
+    Author     : richard
 --%>
 
+<%@page import="Model.Accommodation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,16 +13,16 @@
     </head>
     <body>
         <%@ include file="header.jsp" %>
+        <% Accommodation accommodation = (Accommodation) request.getAttribute("accommodation"); %>
 
-        <h1>Criar Hospedagem</h1>
-        <form action="/buddySurf/my-accommodations" method="POST">
-            País: <input type="text" name="country"> <br/>
-            Cidade: <input type="text" name="city"> <br/>
+        <h1>Fazer Reserva</h1>
+
+        <p>Diária por pessoa: R$ <%= accommodation.getGuestPrice() %>,00</p>
+
+        <form action='/buddySurf/booking/<%= accommodation.getId() %>' method="POST">
             Hóspedes: <input type="number" name="maxGuests"> <br/>
-            Preço por Hóspede: <input type="number" name="guest_price"> <br/>
             Data Inicial: <input type="date" name="dt_start"> <span>Hoje</span> <br/>
             Data Final: <input type="date" name="dt_end"> <br/>
-
             <input type="submit">
         </form>
     </body>

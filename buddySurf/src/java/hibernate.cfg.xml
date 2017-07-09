@@ -49,5 +49,6 @@ Contributor(s):
     <mapping class="Model.Users"/>
     <mapping class="Model.Rating"/>
     <mapping class="Model.Accommodation"/>
+    <mapping class="Model.Booking"/>
   </session-factory>
 </hibernate-configuration>
