@@ -25,18 +25,17 @@ public class Index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Session session = HibernateSessionFactory.getSession();
+        Query query = session.getNamedQuery("Accommodation.findAll");
+        request.setAttribute("accommodations", query.list());
 
-        HttpSession httpSession = request.getSession(false);
-	if (httpSession != null) {
-            Users user = (Users) httpSession.getAttribute("user");
+        HttpSession httpSession = request.getSession(true);
+        Users user = (Users) httpSession.getAttribute("user");
+	if (user != null) {
             request.setAttribute("user", user);
-
-            Session session = HibernateSessionFactory.getSession();
-            Query query = session.getNamedQuery("Accommodation.findAll");
-            request.setAttribute("accommodations", query.list());
         }
 
-        processRequest(request, response);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     @Override

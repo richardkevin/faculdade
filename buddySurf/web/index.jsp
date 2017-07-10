@@ -53,7 +53,7 @@
                                 <td><%= accom.getDt_start() %></td>
                                 <td><%= accom.getDt_end() %></td>
                                 <td><%= accom.getOwner().getUsername() %></td>
-                                <% if (accom.getOwner().getId() != user.getId()) { %>
+                                <% if (user != null && accom.getOwner().getId() != user.getId()) { %>
                                     <td><a href="buddySurf/booking/<%= accom.getId() %>">Reservar</a></td>
                                 <% } %>
                                 </tr>

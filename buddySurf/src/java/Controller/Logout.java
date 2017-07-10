@@ -21,6 +21,6 @@ public class Logout extends HttpServlet {
         HttpSession httpSession = request.getSession();
         httpSession.invalidate();
 
-        response.sendRedirect("");
+        response.sendRedirect("/buddySurf");
     }
 }

@@ -42,7 +42,9 @@
                         <tr>
                             <td><a href="profile/<%= user.getId() %>"><%= user.getUsername() %></a></td>
                             <td><a href="profile/<%= user.getId() %>"><%= user.getName() %></a></td>
-                            <td><a href="rate-user/<%= user.getId() %>">Avaliar</a></td>
+                            <% if (user.getId() != user.getId()) { %>
+                                <td><a href="rate-user/<%= user.getId() %>">Avaliar</a></td>
+                            <% } %>
                         </tr>
                     <% } %>
                 </table>
