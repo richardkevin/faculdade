@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -38,14 +39,13 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        List result = session.getNamedQuery("Users.findByUsername").setString("username", username).list();
-        request.setAttribute("error", null);
-        
-        if (result.isEmpty()){
+        Query query = session.getNamedQuery("Users.findByUsername").setString("username", username);
+        Users user = (Users) query.uniqueResult();
+        if (user == null){
             request.setAttribute("error", "Usuário inválido");
+            processRequest(request, response);
         }
         else{
-            Users user = (Users) result.get(0);
             if (user.getPassword().equals(password)){
                 String name = user.getName();
                 HttpSession httpSession = request.getSession();

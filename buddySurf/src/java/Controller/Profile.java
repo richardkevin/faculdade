@@ -32,15 +32,18 @@ public class Profile extends HttpServlet {
             request.setAttribute("hideSidebar", true);
         }
 
-        HttpSession httpSession = request.getSession(false);
-	if (httpSession != null) {
-            Users user = (Users) httpSession.getAttribute("user");
+        HttpSession httpSession = request.getSession(true);
+        Users user = (Users) httpSession.getAttribute("user");
+        if (user != null) {
             request.setAttribute("user", user);
 
             Session session = HibernateSessionFactory.getSession();
             long userId = user.getId();
             Query query = session.getNamedQuery("Rating.findByReceiver").setParameter("receiver_id", userId);
             request.setAttribute("rates", query.list());
+
+            query = session.getNamedQuery("Rating.getReceiverAverage").setParameter("receiver_id", userId);
+            request.setAttribute("userAverage", query.uniqueResult());
 
             query = session.getNamedQuery("Accommodation.findByOwnerId").setParameter("owner_id", userId);
             request.setAttribute("accommodations", query.list());

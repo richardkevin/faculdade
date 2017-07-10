@@ -16,18 +16,19 @@
     <body>
         <%@ include file="header.jsp" %>
         <% Users user = (Users) request.getAttribute("user"); %>
+        <% List<Rating> rates = (List<Rating>) request.getAttribute("rates"); %>
 
         <div class="container-fluid">
             <% if (request.getAttribute("hideSidebar") == null) { %>
                 <div class="sidebar col-md-2">
                     <h1>Olá <%= user.getName() %>!</h1>
+                    
+                    <%= request.getAttribute("userAverage") %>
                 </div>
             <% } %>
 
             <div class="col-md-offset-1 col-md-7">
                 <span class="title">Minhas Avaliações</span>
-
-                <% List<Rating> rates = (List<Rating>) request.getAttribute("rates"); %>
                     <% if (rates.isEmpty()) { %>
                         <p>Não há avaliações</p>
                     <% } else { %>
@@ -35,16 +36,14 @@
                         <thead>
                             <tr>
                                 <th>Usuário</th>
-                                <!--<th>Tipo</th>-->
                                 <th>Descrição</th>
-                                <th>Avaliação</th>
+                                <th>Nota</th>
                             </tr>
                         </thead>
                     <tbody>
                         <% for (Rating rate : rates) { %>
                             <tr>
                                 <td><%= rate.getSender().getName() %></td>
-                                <!--<td><%= rate.getType() %></td>-->
                                 <td><%= rate.getDescription() %></td>
                                 <td><%= rate.getStars() %></td>
                                 </tr>
@@ -82,9 +81,8 @@
                             </tr>
                         <% } %>
                     </table>
+                    <span class="right"><a href="my-accommodations">ver todas</a></span>
                 <% } %>
-
-                <span class="right"><a href="my-accommodations">ver todas</a></span>
             </div>
             <% } %>
         </div>

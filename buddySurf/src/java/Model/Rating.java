@@ -25,6 +25,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Rating.findByType", query = "SELECT r FROM Rating r where r.type = :type"),
     @NamedQuery(name = "Rating.findByStars", query = "SELECT r FROM Rating r where r.stars = :stars"),
     @NamedQuery(name = "Rating.findByReceiver", query = "SELECT r FROM Rating r where r.receiver.id = :receiver_id"),
+    @NamedQuery(name = "Rating.getReceiverAverage", query = "SELECT avg(r.stars + 0.0) FROM Rating r where r.receiver.id = :receiver_id"),
 })
 public class Rating implements Serializable{
     @Id
