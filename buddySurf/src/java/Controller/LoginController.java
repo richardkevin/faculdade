@@ -57,11 +57,11 @@ public class LoginController extends HttpServlet {
             }
             else{
                 request.setAttribute("error", "Senha inválida");
+                processRequest(request, response);
             }
         }
 
         session.close();
-        processRequest(request, response);
     }
 
 }

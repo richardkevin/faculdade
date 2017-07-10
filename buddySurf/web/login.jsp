@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : login
     Created on : 09/05/2017, 21:13:20
     Author     : richard
@@ -13,13 +13,27 @@
     <body>
         <%@ include file="header.jsp" %>
 
-        <div class="center">
-            <h1>Entrar</h1>
+        <div class="container-fluid">
+            <h1 class="col-sm-offset-5">Entrar</h1>
 
-            <form action="Login" method="POST">
-                Username: <input type='text' name='username'> <br/>
-                Password: <input type='text' name='password'> <br/>
-                <input type='submit' value='Login'>
+            <form class="form-horizontal col-sm-offset-2" action="Login" method="POST">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Username:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" name="username">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-5">
+                  <input type="password" class="form-control" name="password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-5">
+                  <button type="submit" class="btn btn-default">Entrar</button>
+                </div>
+              </div>
             </form>
 
             <div class="errors">

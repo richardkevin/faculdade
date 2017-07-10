@@ -14,15 +14,50 @@
         <%@ include file="header.jsp" %>
 
         <h1>Cadastre-se</h1>
-        <form action='add' method='POST'>
-            Nome: <input type='text' name='name' maxlength="50"> <span>Máximo de caracteres: 50</span> <br/>
-        Username: <input type='text' name='username' maxlength="20"> <span>Máximo de caracteres: 20</span><br/>
-        Password: <input type='text' name='password' maxlength="10"> <span>Máximo de caracteres: 10</span><br/>
-        Idade: <input type='text' name='age' > <br/>
-        Endereço: <input type='text' name='address' maxlength="10"> <span>Máximo de caracteres: 10</span><br/>
-        Max Guests: <input type="checkbox" name='allowGuest'> <br/>
-
-        <input type='submit' value='Enviar'>
+        <form action='add' method='POST' class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Nome:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type='text' name='name' maxlength="50">
+                </div>
+                <span>Máximo de caracteres: 50</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Username:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type='text' name='username' maxlength="20">
+                </div>
+                <span>Máximo de caracteres: 20</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type='password' name='password' maxlength="10">
+                </div>
+                <span>Máximo de caracteres: 10</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Idade:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type='text' name='age' >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Endereço:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type='text' name='address' maxlength="10">
+                </div>
+                <span>Máximo de caracteres: 10</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Permitir Hóspedes:</label>
+                <input type="checkbox" name='allowGuest'>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+              <input class="btn btn-default btn-sm navbar-btn" type='submit' value='Enviar'>
+            </div>
+          </div>
         </form>
     </body>
 </html>

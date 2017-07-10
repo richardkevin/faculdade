@@ -29,10 +29,7 @@
                 <option value='0'>Avaliar Amigo</option>
                 <option value='1'>Avaliar Hóspede</option>
                 <option value='2'>Avaliar Anfitriã(o)</option>
-                <option value='3'>Avaliar Convidado</option>
-                <option value='4'>Avaliar Organizador</option>
             </select> <br/>
-            <div class='rating'>Stars: <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
 
             <div class='stars'>Nota:
                 <input type='radio' name='rate' value='1' checked> 1

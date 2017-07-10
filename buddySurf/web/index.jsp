@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : index
     Created on : 20/05/2017, 19:13:12
     Author     : richard
@@ -15,6 +15,7 @@
     <body>
         <%@ include file="header.jsp" %>
         <% List<Accommodation> accommodations = (List<Accommodation>) request.getAttribute("accommodations"); %>
+        <% Users user = (Users) request.getAttribute("user"); %>
 
         <div class="container-fluid">
             <div class="form-group has-feedback">
@@ -31,7 +32,7 @@
                 <% if (request.getAttribute("accommodations") == null || accommodations.isEmpty()) { %>
                     <p>Não há acomodações</p>
                 <% } else { %>
-                    <table>
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>País</th>
@@ -40,6 +41,7 @@
                                 <th>Data Inicial</th>
                                 <th>Data Final</th>
                                 <th>Usuário</th>
+                                <th></th>
                             </tr>
                         </thead>
                     <tbody>
@@ -51,7 +53,9 @@
                                 <td><%= accom.getDt_start() %></td>
                                 <td><%= accom.getDt_end() %></td>
                                 <td><%= accom.getOwner().getUsername() %></td>
-                                <td><a href="buddySurf/booking/<%= accom.getId() %>">Reservar</a></td>
+                                <% if (accom.getOwner().getId() != user.getId()) { %>
+                                    <td><a href="buddySurf/booking/<%= accom.getId() %>">Reservar</a></td>
+                                <% } %>
                                 </tr>
                         <% } %>
                     </table>

@@ -24,29 +24,29 @@
                 <li role="presentation"><a href="/buddySurf">Acomodações</a></li>
                 <li role="presentation" class="active"><a href="users">Usuários</a></li>
             </ul>
-        </div>
 
-        <% List<Users> listUsers = (List<Users>) request.getAttribute("listUsers"); %>
-            <% if (listUsers.isEmpty()) { %>
-                <p>Não há usuários</p>
-            <% } else { %>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Usuário</th>
-                        <th>Nome</th>
-                    </tr>
-                </thead>
-            <tbody>
-                <% for (Users user : listUsers) { %>
-                    <tr>
-                        <td><a href="rate-user/<%= user.getId() %>">@</a></td>
-                        <td><a href="profile/<%= user.getId() %>"><%= user.getUsername() %></a></td>
-                        <td><a href="profile/<%= user.getId() %>"><%= user.getName() %></a></td>
-                    </tr>
-                <% } %>
-            </table>
-        <% } %>
+            <% List<Users> listUsers = (List<Users>) request.getAttribute("listUsers"); %>
+                <% if (listUsers.isEmpty()) { %>
+                    <p>Não há usuários</p>
+                <% } else { %>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Nome</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <% for (Users user : listUsers) { %>
+                        <tr>
+                            <td><a href="profile/<%= user.getId() %>"><%= user.getUsername() %></a></td>
+                            <td><a href="profile/<%= user.getId() %>"><%= user.getName() %></a></td>
+                            <td><a href="rate-user/<%= user.getId() %>">Avaliar</a></td>
+                        </tr>
+                    <% } %>
+                </table>
+            <% } %>
+        </div>
     </body>
 </html>

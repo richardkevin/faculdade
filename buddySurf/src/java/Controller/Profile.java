@@ -36,12 +36,14 @@ public class Profile extends HttpServlet {
 	if (httpSession != null) {
             Users user = (Users) httpSession.getAttribute("user");
             request.setAttribute("user", user);
-            
+
             Session session = HibernateSessionFactory.getSession();
             long userId = user.getId();
             Query query = session.getNamedQuery("Rating.findByReceiver").setParameter("receiver_id", userId);
+            request.setAttribute("rates", query.list());
 
-            request.setAttribute("listRates", query.list());
+            query = session.getNamedQuery("Accommodation.findByOwnerId").setParameter("owner_id", userId);
+            request.setAttribute("accommodations", query.list());
         }
         else {
             request.getRequestDispatcher("login.jsp").include(request, response);

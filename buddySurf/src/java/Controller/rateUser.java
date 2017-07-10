@@ -39,7 +39,7 @@ public class rateUser extends HttpServlet {
                 Query query = session.getNamedQuery("Users.findAll");
                 List<Users> userList = query.list();
                 long userId = user.getId();
-            
+
                 for (Users u : userList) {
                     if (u.getId() == userId) {
                         userList.remove(u);
@@ -69,8 +69,8 @@ public class rateUser extends HttpServlet {
 
             Query query = session.getNamedQuery("Users.findById");
 
-            Users sender = (Users) query.setParameter("id", sender_id).uniqueResult();
-            Users receiver = (Users) query.setParameter("id", receiver_id).uniqueResult();
+            Users sender = (Users) query.setParameter("userId", sender_id).uniqueResult();
+            Users receiver = (Users) query.setParameter("userId", receiver_id).uniqueResult();
 
             Rating r = new Rating();
             r.setType(type);
@@ -84,6 +84,6 @@ public class rateUser extends HttpServlet {
             tx.commit();
             session.flush();
             session.close();
-            request.getRequestDispatcher("/thanks_redirect.jsp").forward(request, response);
+            response.sendRedirect("/buddySurf");
     }
 }
