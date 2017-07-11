@@ -25,6 +25,8 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Accommodation.findAll", query = "SELECT a FROM Accommodation a"),
     @NamedQuery(name = "Accommodation.findById", query = "SELECT a FROM Accommodation a where a.id = :accommodation_id"),
+    @NamedQuery(name = "Accommodation.findByCountry", query = "SELECT a FROM Accommodation a where a.country LIKE :country"),
+    @NamedQuery(name = "Accommodation.findByCity", query = "SELECT a FROM Accommodation a where a.city LIKE :city"),
     @NamedQuery(name = "Accommodation.findByOwnerId", query = "SELECT a FROM Accommodation a where a.owner.id = :owner_id")
 })
 public class Accommodation implements Serializable {

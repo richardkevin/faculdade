@@ -15,10 +15,7 @@
         <%@ include file="header.jsp" %>
 
         <div class="container-fluid">
-            <div class="form-group has-feedback">
-                <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                <input type="text" class="form-control" placeholder="Procurar...">
-            </div>
+            <%@ include file="search.jsp" %>
 
             <ul class="nav nav-tabs">
                 <li role="presentation"><a href="/buddySurf">Acomodações</a></li>
